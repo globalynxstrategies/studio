@@ -16,7 +16,9 @@ type WidgetType =
   | 'company_profile'
   | 'stock_heatmap'
   | 'crypto_heatmap'
-  | 'forex_heatmap';
+  | 'forex_heatmap'
+  | 'timeline'
+  | 'etf_heatmap';
 
 
 const WIDGET_URLS: Record<WidgetType, string> = {
@@ -32,6 +34,8 @@ const WIDGET_URLS: Record<WidgetType, string> = {
   stock_heatmap: 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js',
   crypto_heatmap: 'https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js',
   forex_heatmap: 'https://s3.tradingview.com/external-embedding/embed-widget-forex-heatmap.js',
+  timeline: 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js',
+  etf_heatmap: 'https://s3.tradingview.com/external-embedding/embed-widget-etf-heatmap.js',
 };
 
 type TradingViewWidgetProps = {
@@ -43,12 +47,14 @@ type TradingViewWidgetProps = {
 const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, widgetType, id }) => {
   const container = useRef<HTMLDivElement>(null);
   const { theme, resolvedTheme } = useTheme();
-  const [uniqueId, setUniqueId] = useState(id || `tradingview_${widgetType}_placeholder`);
+  const [uniqueId, setUniqueId] = useState(id || `tradingview_widget_placeholder`);
 
   useEffect(() => {
     // Generate a unique ID on the client side to prevent hydration mismatch
     if (!id) {
       setUniqueId(`tradingview_${widgetType}_${Math.random().toString(36).substr(2, 9)}`);
+    } else {
+      setUniqueId(id);
     }
   }, [id, widgetType]);
 
@@ -86,26 +92,16 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, wi
     if (widgetType === 'advanced_chart') {
       // Advanced chart uses a different initialization method.
       // We check if the TradingView object is available on the window.
-      if (typeof window.TradingView !== 'undefined') {
-        // @ts-ignore
-        new window.TradingView.widget({
-          autosize: true,
-          ...optionsWithTheme,
-          container_id: uniqueId,
-        });
-      } else {
-        // If not, we load the script and then initialize.
-        script.onload = () => {
-          if ('TradingView' in window) {
-            // @ts-ignore
-            new window.TradingView.widget({
-              autosize: true,
-              ...optionsWithTheme,
-              container_id: uniqueId,
-            });
-          }
-        };
-      }
+      script.onload = () => {
+        if ('TradingView' in window) {
+          // @ts-ignore
+          new window.TradingView.widget({
+            autosize: true,
+            ...optionsWithTheme,
+            container_id: uniqueId,
+          });
+        }
+      };
     } else {
       script.innerHTML = JSON.stringify(optionsWithTheme);
     }

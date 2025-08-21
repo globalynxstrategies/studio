@@ -108,6 +108,48 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+         <Card className="h-[600px]">
+          <CardHeader>
+            <CardTitle>Market News</CardTitle>
+          </CardHeader>
+          <CardContent className="h-full p-0">
+            <TradingViewWidget
+              widgetType="timeline"
+              widgetOptions={{
+                "feedMode": "all_symbols",
+                "isTransparent": false,
+                "displayMode": "adaptive",
+                "locale": "en"
+              }}
+            />
+          </CardContent>
+        </Card>
+        <Card className="h-[600px]">
+          <CardHeader>
+            <CardTitle>ETF Heatmap</CardTitle>
+          </CardHeader>
+          <CardContent className="h-full p-0">
+            <TradingViewWidget
+              widgetType="etf_heatmap"
+              widgetOptions={{
+                "exchanges": [],
+                "dataSource": "AllUS",
+                "grouping": "sector",
+                "blockSize": "aum_24h",
+                "blockColor": "change_24h",
+                "locale": "en",
+                "symbolUrl": "",
+                "hasTopBar": true,
+                "isDataSetEnabled": true,
+                "isZoomEnabled": true,
+                "hasSymbolInfo": true,
+              }}
+            />
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
             <CardHeader><CardTitle>S&P 500 Technical Analysis</CardTitle></CardHeader>
             <CardContent className="h-[450px] p-0">
