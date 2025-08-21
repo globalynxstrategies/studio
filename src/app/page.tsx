@@ -2,7 +2,7 @@ import TradingViewWidget from "@/components/tradingview/tradingview-widget";
 import { PositionSizer } from "@/components/dashboard/position-sizer";
 import { RiskRewardCalculator } from "@/components/dashboard/risk-reward-calculator";
 import PageHeader from "@/components/page-header";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Dashboard() {
   return (
@@ -105,6 +105,35 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+            <CardHeader><CardTitle>S&P 500 Technical Analysis</CardTitle></CardHeader>
+            <CardContent className="h-[450px] p-0">
+                <TradingViewWidget
+                    widgetType="technical_analysis"
+                    widgetOptions={{
+                        "interval": "1D",
+                        "symbol": "SP:SPX",
+                        "showIntervalTabs": true,
+                        "locale": "en",
+                    }}
+                />
+            </CardContent>
+        </Card>
+        <Card>
+            <CardHeader><CardTitle>S&P 500 Fundamental Data</CardTitle></CardHeader>
+            <CardContent className="h-[450px] p-0">
+                <TradingViewWidget
+                    widgetType="company_profile"
+                    widgetOptions={{
+                        "symbol": "SP:SPX",
+                        "locale": "en",
+                    }}
+                />
+            </CardContent>
+        </Card>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">

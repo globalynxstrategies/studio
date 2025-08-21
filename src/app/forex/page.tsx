@@ -15,10 +15,11 @@ export default function ForexPage() {
   
     const handleSymbolChange = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (!inputSymbol.includes(':')) {
-        setSymbol(`FX:${inputSymbol.toUpperCase()}`);
+      const formattedSymbol = inputSymbol.toUpperCase();
+      if (!formattedSymbol.includes(':')) {
+        setSymbol(`FX:${formattedSymbol}`);
       } else {
-        setSymbol(inputSymbol.toUpperCase());
+        setSymbol(formattedSymbol);
       }
     };
 
@@ -48,8 +49,8 @@ export default function ForexPage() {
             </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div>
                 <Card className="h-[450px]">
                     <CardHeader><CardTitle>Technical Analysis</CardTitle></CardHeader>
                     <CardContent className="h-full p-0">
@@ -66,9 +67,9 @@ export default function ForexPage() {
                     </CardContent>
                 </Card>
             </div>
-            <div className="lg:col-span-2">
+            <div>
                 <Card className="h-[450px]">
-                    <CardHeader><CardTitle>Symbol Profile</CardTitle></CardHeader>
+                    <CardHeader><CardTitle>Fundamental Data</CardTitle></CardHeader>
                     <CardContent className="h-full p-0">
                         <TradingViewWidget
                             key={`company-profile-${symbol}`}

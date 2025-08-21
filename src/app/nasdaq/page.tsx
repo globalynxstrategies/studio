@@ -15,10 +15,11 @@ export default function NasdaqPage() {
 
   const handleSymbolChange = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!inputSymbol.includes(':')) {
-        setSymbol(`NASDAQ:${inputSymbol.toUpperCase()}`);
+    const formattedSymbol = inputSymbol.toUpperCase();
+    if (!formattedSymbol.includes(':')) {
+        setSymbol(`NASDAQ:${formattedSymbol}`);
     } else {
-        setSymbol(inputSymbol.toUpperCase());
+        setSymbol(formattedSymbol);
     }
   };
 
@@ -72,13 +73,13 @@ export default function NasdaqPage() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
           <Card className="h-full">
             <CardHeader>
               <CardTitle>Technical Analysis</CardTitle>
             </CardHeader>
-            <CardContent className="h-full p-0">
+            <CardContent className="h-[450px] p-0">
               <TradingViewWidget
                 key={`tech-analysis-${symbol}`}
                 widgetType="technical_analysis"
@@ -87,27 +88,23 @@ export default function NasdaqPage() {
                   symbol: symbol,
                   showIntervalTabs: true,
                   locale: "en",
-                  height: "100%",
-                  width: "100%"
                 }}
               />
             </CardContent>
           </Card>
         </div>
-        <div className="lg:col-span-2">
+        <div>
           <Card className="h-full">
             <CardHeader>
-              <CardTitle>Company Profile</CardTitle>
+              <CardTitle>Fundamental Data</CardTitle>
             </CardHeader>
-            <CardContent className="h-full p-0">
+            <CardContent className="h-[450px] p-0">
               <TradingViewWidget
                 key={`company-profile-${symbol}`}
                 widgetType="company_profile"
                 widgetOptions={{
                   symbol: symbol,
                   locale: "en",
-                  height: "100%",
-                  width: "100%"
                 }}
               />
             </CardContent>
