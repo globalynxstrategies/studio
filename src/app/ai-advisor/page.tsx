@@ -1,3 +1,5 @@
+"use client";
+
 import MarketSentimentAnalyzer from "@/components/ai/market-sentiment-analyzer";
 import OptionAdvisor from "@/components/ai/option-advisor";
 import SwingSuggester from "@/components/ai/swing-suggester";
