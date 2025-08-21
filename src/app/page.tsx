@@ -108,7 +108,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-         <Card className="h-[600px]">
+         <Card className="h-full">
           <CardHeader>
             <CardTitle>Market News</CardTitle>
           </CardHeader>
@@ -124,7 +124,7 @@ export default function Dashboard() {
             />
           </CardContent>
         </Card>
-        <Card className="h-[600px]">
+        <Card className="h-full">
           <CardHeader>
             <CardTitle>ETF Heatmap</CardTitle>
           </CardHeader>
@@ -150,9 +150,9 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="h-full">
             <CardHeader><CardTitle>S&P 500 Technical Analysis</CardTitle></CardHeader>
-            <CardContent className="h-[450px] p-0">
+            <CardContent className="h-full p-0">
                 <TradingViewWidget
                     widgetType="technical_analysis"
                     widgetOptions={{
@@ -164,9 +164,9 @@ export default function Dashboard() {
                 />
             </CardContent>
         </Card>
-        <Card>
+        <Card className="h-full">
             <CardHeader><CardTitle>S&P 500 Fundamental Data</CardTitle></CardHeader>
-            <CardContent className="h-[450px] p-0">
+            <CardContent className="h-full p-0">
                 <TradingViewWidget
                     widgetType="company_profile"
                     widgetOptions={{

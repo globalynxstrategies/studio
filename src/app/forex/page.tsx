@@ -51,7 +51,7 @@ export default function ForexPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
-                <Card className="h-[450px]">
+                <Card className="h-full">
                     <CardHeader><CardTitle>Technical Analysis</CardTitle></CardHeader>
                     <CardContent className="h-full p-0">
                         <TradingViewWidget
@@ -68,7 +68,7 @@ export default function ForexPage() {
                 </Card>
             </div>
             <div>
-                <Card className="h-[450px]">
+                <Card className="h-full">
                     <CardHeader><CardTitle>Fundamental Data</CardTitle></CardHeader>
                     <CardContent className="h-full p-0">
                         <TradingViewWidget

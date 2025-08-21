@@ -14,7 +14,7 @@ export default function AiAdvisorPage() {
         <OptionAdvisor />
         <SwingSuggester />
       </div>
-      <div className="pt-8">
+      <div>
         <MarketSentimentAnalyzer />
       </div>
     </div>

@@ -58,7 +58,7 @@ export default function NasdaqPage() {
         <CardContent className="h-full p-0">
           <TradingViewWidget
             id={chartId}
-            key={symbol}
+            key={chartId}
             widgetType="advanced_chart"
             widgetOptions={{
               symbol: symbol,
@@ -79,7 +79,7 @@ export default function NasdaqPage() {
             <CardHeader>
               <CardTitle>Technical Analysis</CardTitle>
             </CardHeader>
-            <CardContent className="h-[450px] p-0">
+            <CardContent className="h-full p-0">
               <TradingViewWidget
                 key={`tech-analysis-${symbol}`}
                 widgetType="technical_analysis"
@@ -98,7 +98,7 @@ export default function NasdaqPage() {
             <CardHeader>
               <CardTitle>Fundamental Data</CardTitle>
             </CardHeader>
-            <CardContent className="h-[450px] p-0">
+            <CardContent className="h-full p-0">
               <TradingViewWidget
                 key={`company-profile-${symbol}`}
                 widgetType="company_profile"
