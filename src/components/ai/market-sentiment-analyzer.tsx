@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useFormStatus } from "react";
+import { useActionState, useFormStatus } from "react-dom";
 import { getMarketSentiment, type MarketSentimentState } from "@/app/ai-advisor/actions";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -13,7 +13,7 @@ import { Badge } from "../ui/badge";
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending}>
+    <Button type="submit" disabled={pending} className="w-full sm:w-auto">
       {pending ? "Analyzing..." : "Analyze Sentiment"}
       <Zap className="ml-2 h-4 w-4" />
     </Button>
@@ -23,7 +23,6 @@ function SubmitButton() {
 export default function MarketSentimentAnalyzer() {
   const initialState: MarketSentimentState = { data: null, error: null };
   const [state, formAction] = useActionState(getMarketSentiment, initialState);
-  const { pending } = useFormStatus();
 
   const getSentimentVariant = (sentiment: 'Positive' | 'Negative' | 'Neutral' | undefined) => {
     switch (sentiment) {
@@ -39,7 +38,7 @@ export default function MarketSentimentAnalyzer() {
   }
 
   return (
-    <Card className="h-full w-full">
+    <Card>
       <form action={formAction}>
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -74,16 +73,9 @@ export default function MarketSentimentAnalyzer() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-4">
           <SubmitButton />
-          {pending && (
-            <div className="space-y-4 w-full">
-              <Skeleton className="h-8 w-1/4" />
-              <Skeleton className="h-16 w-full" />
-              <Skeleton className="h-12 w-2/3" />
-            </div>
-          )}
           {state.error && <p className="text-sm text-destructive">{state.error}</p>}
-          {state.data && !pending && (
-            <div className="space-y-4 rounded-lg border bg-secondary p-4 w-full">
+          {state.data && (
+            <div className="space-y-4 rounded-lg border bg-secondary p-4 w-full mt-4">
               <div className="flex items-center gap-4">
                 <h3 className="font-semibold text-primary-foreground/90">Overall Sentiment:</h3>
                 <Badge variant={getSentimentVariant(state.data.sentiment)}>{state.data.sentiment}</Badge>

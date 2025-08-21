@@ -1,12 +1,11 @@
 "use client";
 
-import { useActionState, useFormStatus } from "react";
+import { useActionState, useFormStatus } from "react-dom";
 import { getNewsSummary, type NewsSummarizerState } from "@/app/news-summarizer/actions";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Bot, Zap } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
 import { Textarea } from "../ui/textarea";
 import { Badge } from "../ui/badge";
 
@@ -23,7 +22,6 @@ function SubmitButton() {
 export default function NewsSummarizer() {
   const initialState: NewsSummarizerState = { data: null, error: null };
   const [state, formAction] = useActionState(getNewsSummary, initialState);
-  const { pending } = useFormStatus();
 
   const getSentimentVariant = (sentiment: 'Positive' | 'Negative' | 'Neutral' | undefined) => {
     switch (sentiment) {
@@ -39,7 +37,7 @@ export default function NewsSummarizer() {
   }
 
   return (
-    <Card className="h-full w-full">
+    <Card className="w-full">
       <form action={formAction}>
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -62,16 +60,9 @@ export default function NewsSummarizer() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-4">
           <SubmitButton />
-          {pending && (
-            <div className="space-y-4 w-full">
-              <Skeleton className="h-8 w-1/4" />
-              <Skeleton className="h-24 w-full" />
-              <Skeleton className="h-16 w-full" />
-            </div>
-          )}
           {state.error && <p className="text-sm text-destructive">{state.error}</p>}
-          {state.data && !pending && (
-            <div className="space-y-4 rounded-lg border bg-secondary p-4 w-full">
+          {state.data && (
+            <div className="space-y-4 rounded-lg border bg-secondary p-4 w-full mt-4">
               <div className="flex items-center gap-4">
                 <h3 className="font-semibold text-primary-foreground/90">Sentiment:</h3>
                 <Badge variant={getSentimentVariant(state.data.sentiment)}>{state.data.sentiment}</Badge>
