@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useFormStatus } from "react";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { getSwingSuggestion, type SwingSuggesterState } from "@/app/ai-advisor/actions";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -23,6 +24,7 @@ function SubmitButton() {
 export default function SwingSuggester() {
   const initialState: SwingSuggesterState = { data: null, error: null };
   const [state, formAction] = useActionState(getSwingSuggestion, initialState);
+  const { pending } = useFormStatus();
 
   return (
     <Card className="h-full">
@@ -74,7 +76,7 @@ export default function SwingSuggester() {
         </CardContent>
         <CardFooter className="flex-col items-start gap-4">
           <SubmitButton />
-          {useFormStatus().pending && (
+          {pending && (
             <div className="space-y-4 w-full">
               <Skeleton className="h-8 w-1/2" />
               <div className="grid grid-cols-2 gap-4 w-full">
@@ -87,7 +89,7 @@ export default function SwingSuggester() {
             </div>
           )}
           {state.error && <p className="text-sm text-destructive">{state.error}</p>}
-          {state.data && !useFormStatus().pending && (
+          {state.data && !pending && (
             <div className="space-y-4 rounded-lg border bg-card p-4 w-full">
               <h3 className="font-semibold text-accent">Swing Trade Suggestion: ${state.data.stockSymbol}</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
