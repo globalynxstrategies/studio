@@ -1,7 +1,7 @@
+import MarketSentimentAnalyzer from "@/components/ai/market-sentiment-analyzer";
 import OptionAdvisor from "@/components/ai/option-advisor";
 import SwingSuggester from "@/components/ai/swing-suggester";
 import PageHeader from "@/components/page-header";
-import { Separator } from "@/components/ui/separator";
 
 export default function AiAdvisorPage() {
   return (
@@ -13,6 +13,9 @@ export default function AiAdvisorPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <OptionAdvisor />
         <SwingSuggester />
+      </div>
+      <div className="pt-8">
+        <MarketSentimentAnalyzer />
       </div>
     </div>
   );

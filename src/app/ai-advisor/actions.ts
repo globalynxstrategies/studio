@@ -2,6 +2,8 @@
 
 import { aiOptionAdvisor, type AIOptionAdvisorInput, type AIOptionAdvisorOutput } from "@/ai/flows/ai-option-advisor";
 import { aiSwingSuggester, type AiSwingSuggesterInput, type AiSwingSuggesterOutput } from "@/ai/flows/ai-swing-suggester";
+import { aiMarketSentimentAnalyzer, type AIMarketSentimentAnalyzerInput, type AIMarketSentimentAnalyzerOutput } from "@/ai/flows/ai-market-sentiment-analyzer";
+
 
 export interface OptionAdvisorState {
   data: AIOptionAdvisorOutput | null;
@@ -56,4 +58,31 @@ export async function getSwingSuggestion(
     } catch (e: any) {
         return { data: null, error: e.message || "An unexpected error occurred." };
     }
+}
+
+
+export interface MarketSentimentState {
+  data: AIMarketSentimentAnalyzerOutput | null;
+  error: string | null;
+}
+
+export async function getMarketSentiment(
+  prevState: MarketSentimentState,
+  formData: FormData
+): Promise<MarketSentimentState> {
+  const input: AIMarketSentimentAnalyzerInput = {
+    marketNews: formData.get("marketNews") as string,
+    socialMediaMentions: formData.get("socialMediaMentions") as string,
+  };
+
+  if (!input.marketNews && !input.socialMediaMentions) {
+    return { data: null, error: "Please provide market news or social media mentions." };
+  }
+
+  try {
+    const result = await aiMarketSentimentAnalyzer(input);
+    return { data: result, error: null };
+  } catch (e: any) {
+    return { data: null, error: e.message || "An unexpected error occurred." };
+  }
 }
