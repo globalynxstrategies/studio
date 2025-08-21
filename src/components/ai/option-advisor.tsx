@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Bot, Zap } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { Textarea } from "../ui/textarea";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -33,9 +34,19 @@ export default function OptionAdvisor() {
              <Bot className="h-6 w-6 text-primary" />
              <CardTitle className="font-headline">AI Option Advisor</CardTitle>
           </div>
-          <CardDescription>Get timely trade recommendations using the Option Clock.</CardDescription>
+          <CardDescription>Get timely trade recommendations using the Option Clock and TradingView data.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="tradingview-data">TradingView Data</Label>
+            <Textarea 
+              id="tradingview-data"
+              name="tradingViewData"
+              placeholder="Paste technical analysis summary from TradingView here..."
+              required
+              defaultValue="Overall Rating: Strong Buy. Moving Averages: Buy. Oscillators: Neutral."
+            />
+          </div>
           <div className="space-y-2">
             <Label>Trading Window</Label>
             <Select name="tradingWindow" required defaultValue="Peak">
@@ -73,13 +84,13 @@ export default function OptionAdvisor() {
           )}
           {state.error && <p className="text-sm text-destructive">{state.error}</p>}
           {state.data && !pending && (
-            <div className="space-y-4 rounded-lg border bg-card p-4 w-full">
+            <div className="space-y-4 rounded-lg border bg-secondary p-4 w-full">
               <div>
-                <h3 className="font-semibold text-accent">Recommendation</h3>
+                <h3 className="font-semibold text-primary-foreground/90">Recommendation</h3>
                 <p>{state.data.recommendation}</p>
               </div>
               <div>
-                <h3 className="font-semibold">Rationale</h3>
+                <h3 className="font-semibold text-primary-foreground/90">Rationale</h3>
                 <p className="text-sm text-muted-foreground">{state.data.rationale}</p>
               </div>
             </div>

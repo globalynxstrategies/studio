@@ -12,6 +12,7 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const AIOptionAdvisorInputSchema = z.object({
+  tradingViewData: z.string().describe('The data from the TradingView analysis tool.'),
   tradingWindow: z.string().describe('The current trading window of the Option Clock (e.g., Early, Peak, Late).'),
   marketConditions: z.string().describe('A description of current market conditions (e.g., Bullish, Bearish, Sideways).'),
 });
@@ -31,10 +32,11 @@ const prompt = ai.definePrompt({
   name: 'aiOptionAdvisorPrompt',
   input: {schema: AIOptionAdvisorInputSchema},
   output: {schema: AIOptionAdvisorOutputSchema},
-  prompt: `You are an AI Option Advisor that uses the Option Clock to recommend timely trades.
+  prompt: `You are an AI Option Advisor that uses the Option Clock and technical analysis data to recommend timely trades.
 
 The current trading window is: {{{tradingWindow}}}
 The current market conditions are: {{{marketConditions}}}
+TradingView Technical Analysis: {{{tradingViewData}}}
 
 Based on this information, provide a trade recommendation and the rationale behind it.
 `,

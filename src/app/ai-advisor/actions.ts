@@ -13,11 +13,12 @@ export async function getOptionAdvice(
   formData: FormData
 ): Promise<OptionAdvisorState> {
   const input: AIOptionAdvisorInput = {
+    tradingViewData: formData.get("tradingViewData") as string,
     tradingWindow: formData.get("tradingWindow") as string,
     marketConditions: formData.get("marketConditions") as string,
   };
 
-  if (!input.tradingWindow || !input.marketConditions) {
+  if (!input.tradingViewData || !input.tradingWindow || !input.marketConditions) {
     return { data: null, error: "Please provide all required inputs." };
   }
 

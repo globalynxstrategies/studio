@@ -62,7 +62,6 @@ export default function ForexPage() {
                             symbol: symbol,
                             showIntervalTabs: true,
                             locale: "en",
-                            colorTheme: "light",
                             }}
                         />
                     </CardContent>
@@ -79,7 +78,6 @@ export default function ForexPage() {
                             symbol: symbol,
                             width: "100%",
                             isTransparent: false,
-                            colorTheme: "light",
                             locale: "en",
                             }}
                         />
@@ -98,7 +96,6 @@ export default function ForexPage() {
                         "height": "100%",
                         "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD", "CNY" ],
                         "isTransparent": false,
-                        "colorTheme": "light",
                         "locale": "en",
                     }}
                 />
@@ -117,7 +114,6 @@ export default function ForexPage() {
                     "height": "100%",
                     "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD" ],
                     "isTransparent": false,
-                    "colorTheme": "light",
                     "locale": "en"
                     }}
                 />

@@ -14,7 +14,6 @@ export default function CryptoPage() {
 
   const handleSymbolChange = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Assuming symbols are in format EXCHANGE:SYMBOLPAIR
     if (!inputSymbol.includes(':')) {
         setSymbol(`BITSTAMP:${inputSymbol.toUpperCase()}`);
     } else {
@@ -63,7 +62,6 @@ export default function CryptoPage() {
                   symbol: symbol,
                   showIntervalTabs: true,
                   locale: "en",
-                  colorTheme: "light",
                 }}
               />
             </CardContent>
@@ -80,7 +78,6 @@ export default function CryptoPage() {
                   symbol: symbol,
                   width: "100%",
                   isTransparent: false,
-                  colorTheme: "light",
                   locale: "en",
                 }}
               />
@@ -102,7 +99,6 @@ export default function CryptoPage() {
                 blockColor: "change_24h",
                 locale: "en",
                 symbolUrl: "",
-                colorTheme: "light",
                 hasTopBar: true,
                 isDataSetEnabled: true,
                 isZoomEnabled: true,
@@ -128,7 +124,6 @@ export default function CryptoPage() {
               "defaultColumn": "overview",
               "screener_type": "crypto_mkt",
               "displayCurrency": "USD",
-              "colorTheme": "light",
               "locale": "en",
               "isTransparent": false
             }}

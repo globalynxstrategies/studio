@@ -90,8 +90,8 @@ export default function SwingSuggester() {
           )}
           {state.error && <p className="text-sm text-destructive">{state.error}</p>}
           {state.data && !pending && (
-            <div className="space-y-4 rounded-lg border bg-card p-4 w-full">
-              <h3 className="font-semibold text-accent">Swing Trade Suggestion: ${state.data.stockSymbol}</h3>
+            <div className="space-y-4 rounded-lg border bg-secondary p-4 w-full">
+              <h3 className="font-semibold text-primary-foreground/90">Swing Trade Suggestion: ${state.data.stockSymbol}</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium">Entry Price:</p>
@@ -107,7 +107,7 @@ export default function SwingSuggester() {
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold">Rationale</h3>
+                <h3 className="font-semibold text-primary-foreground/90">Rationale</h3>
                 <p className="text-sm text-muted-foreground">{state.data.rationale}</p>
               </div>
             </div>

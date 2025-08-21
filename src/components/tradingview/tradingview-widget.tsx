@@ -45,16 +45,24 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, wi
   useEffect(() => {
     if (!container.current) return;
 
+    const currentTheme = theme === 'system' ? resolvedTheme : theme;
+    
+    // Merge theme into widget options
+    const optionsWithTheme = { 
+      ...widgetOptions, 
+      theme: currentTheme, 
+      colorTheme: currentTheme 
+    };
+    
+    // Create script element
     const script = document.createElement('script');
-    script.src = widgetType === 'advanced_chart' ? 'https://s3.tradingview.com/tv.js' : WIDGET_URLS[widgetType];
+    script.src = WIDGET_URLS[widgetType];
     script.type = 'text/javascript';
     script.async = true;
 
-    const currentTheme = theme === 'system' ? resolvedTheme : theme;
-    
-    const optionsWithTheme = { ...widgetOptions, theme: currentTheme, colorTheme: currentTheme };
-
+    // Handle advanced chart differently
     if (widgetType === 'advanced_chart') {
+        script.src = 'https://s3.tradingview.com/tv.js';
         script.onload = () => {
             if (container.current && 'TradingView' in window) {
                 // @ts-ignore
@@ -69,20 +77,20 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, wi
         script.innerHTML = JSON.stringify(optionsWithTheme);
     }
 
-    // Clear previous widget
+    // Clear previous widget and append the new one
     while (container.current.firstChild) {
       container.current.removeChild(container.current.firstChild);
     }
-    
     container.current.appendChild(script);
 
   }, [widgetOptions, widgetType, theme, resolvedTheme]);
 
+  const containerId = `tradingview_${widgetType}_${Math.random()}`;
   const minHeight = widgetOptions.minHeight || (widgetType === 'ticker_tape' ? 45 : 400);
 
   return (
-    <div className="tradingview-widget-container" ref={container} style={{ width: '100%', height: '100%', minHeight: `${minHeight}px` }}>
-      <div className="tradingview-widget-container__widget"></div>
+    <div className="tradingview-widget-container h-full w-full" ref={container} id={containerId} style={{ minHeight: `${minHeight}px` }}>
+      <div className="tradingview-widget-container__widget h-full w-full"></div>
     </div>
   );
 };
