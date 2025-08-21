@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react";
 import { getOptionAdvice, type OptionAdvisorState } from "@/app/ai-advisor/actions";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -21,7 +21,7 @@ function SubmitButton() {
 
 export default function OptionAdvisor() {
   const initialState: OptionAdvisorState = { data: null, error: null };
-  const [state, formAction] = useFormState(getOptionAdvice, initialState);
+  const [state, formAction] = useActionState(getOptionAdvice, initialState);
 
   return (
     <Card className="h-full">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useFormStatus } from "react";
 import { getSwingSuggestion, type SwingSuggesterState } from "@/app/ai-advisor/actions";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -22,7 +22,7 @@ function SubmitButton() {
 
 export default function SwingSuggester() {
   const initialState: SwingSuggesterState = { data: null, error: null };
-  const [state, formAction] = useFormState(getSwingSuggestion, initialState);
+  const [state, formAction] = useActionState(getSwingSuggestion, initialState);
 
   return (
     <Card className="h-full">
