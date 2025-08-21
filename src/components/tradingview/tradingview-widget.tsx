@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo, useState } from 'react';
 import { useTheme } from 'next-themes';
 
 type WidgetType =
@@ -43,11 +43,18 @@ type TradingViewWidgetProps = {
 const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, widgetType, id }) => {
   const container = useRef<HTMLDivElement>(null);
   const { theme, resolvedTheme } = useTheme();
-  const hasRun = useRef(false);
-  const uniqueId = useRef(id || `tradingview_${widgetType}_${Math.random().toString(36).substr(2, 9)}`);
+  const [uniqueId, setUniqueId] = useState(id || `tradingview_${widgetType}_placeholder`);
 
   useEffect(() => {
-    if (!container.current || hasRun.current) return;
+    // Generate a unique ID on the client side to prevent hydration mismatch
+    if (!id) {
+      setUniqueId(`tradingview_${widgetType}_${Math.random().toString(36).substr(2, 9)}`);
+    }
+  }, [id, widgetType]);
+
+
+  useEffect(() => {
+    if (!container.current || uniqueId.includes('placeholder')) return;
 
     const currentTheme = theme === 'system' ? resolvedTheme : theme;
     
@@ -60,43 +67,62 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, wi
     const optionsWithTheme = { 
         ...defaultOptions,
         ...widgetOptions,
-        theme: currentTheme, 
-        colorTheme: currentTheme 
+        theme: currentTheme === 'dark' ? 'dark' : 'light', 
+        colorTheme: currentTheme === 'dark' ? 'dark' : 'light',
     };
 
     const script = document.createElement('script');
     script.src = WIDGET_URLS[widgetType];
     script.type = 'text/javascript';
     script.async = true;
+    script.id = `${uniqueId}-script`;
+
+    // Clean up previous script if it exists
+    const existingScript = document.getElementById(script.id);
+    if (existingScript) {
+        existingScript.remove();
+    }
 
     if (widgetType === 'advanced_chart') {
-      script.onload = () => {
-        if ('TradingView' in window) {
-          // @ts-ignore
-          new window.TradingView.widget({
-            autosize: true,
-            ...optionsWithTheme,
-            container_id: uniqueId.current,
-          });
-        }
-      };
+      // Advanced chart uses a different initialization method.
+      // We check if the TradingView object is available on the window.
+      if (typeof window.TradingView !== 'undefined') {
+        // @ts-ignore
+        new window.TradingView.widget({
+          autosize: true,
+          ...optionsWithTheme,
+          container_id: uniqueId,
+        });
+      } else {
+        // If not, we load the script and then initialize.
+        script.onload = () => {
+          if ('TradingView' in window) {
+            // @ts-ignore
+            new window.TradingView.widget({
+              autosize: true,
+              ...optionsWithTheme,
+              container_id: uniqueId,
+            });
+          }
+        };
+      }
     } else {
       script.innerHTML = JSON.stringify(optionsWithTheme);
     }
     
+    // Clear the container and append the new script.
     while (container.current.firstChild) {
       container.current.removeChild(container.current.firstChild);
     }
     container.current.appendChild(script);
-    hasRun.current = true;
 
-  }, [widgetOptions, widgetType, theme, resolvedTheme]);
+  }, [widgetOptions, widgetType, theme, resolvedTheme, uniqueId]);
 
   const minHeight = widgetOptions.minHeight || (widgetType === 'ticker_tape' ? 45 : 400);
 
   return (
     <div 
-        id={uniqueId.current}
+        id={uniqueId}
         ref={container}
         className="tradingview-widget-container h-full w-full" 
         style={{ minHeight: `${minHeight}px` }}
