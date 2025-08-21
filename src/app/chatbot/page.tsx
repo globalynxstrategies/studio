@@ -3,7 +3,7 @@ import PageHeader from "@/components/page-header";
 
 export default function ChatbotPage() {
   return (
-    <div className="space-y-8 h-full flex flex-col">
+    <div className="space-y-6 h-full flex flex-col">
       <PageHeader
         title="Trading Chatbot"
         description="Ask me anything about trading, market analysis, or financial concepts."

@@ -72,9 +72,8 @@ export default function StocksPage() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
-          <Card className="h-[450px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle>Technical Analysis</CardTitle>
             </CardHeader>
@@ -87,15 +86,11 @@ export default function StocksPage() {
                   symbol: symbol,
                   showIntervalTabs: true,
                   locale: "en",
-                  height: 450,
-                  width: "100%"
                 }}
               />
             </CardContent>
           </Card>
-        </div>
-        <div className="lg:col-span-2">
-          <Card className="h-[450px]">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle>Company Profile</CardTitle>
             </CardHeader>
@@ -106,13 +101,10 @@ export default function StocksPage() {
                 widgetOptions={{
                   symbol: symbol,
                   locale: "en",
-                  height: 450,
-                  width: "100%"
                 }}
               />
             </CardContent>
           </Card>
-        </div>
       </div>
       
       <Card className="h-[600px]">

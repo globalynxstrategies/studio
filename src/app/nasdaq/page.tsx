@@ -74,7 +74,6 @@ export default function NasdaqPage() {
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div>
           <Card className="h-full">
             <CardHeader>
               <CardTitle>Technical Analysis</CardTitle>
@@ -92,8 +91,6 @@ export default function NasdaqPage() {
               />
             </CardContent>
           </Card>
-        </div>
-        <div>
           <Card className="h-full">
             <CardHeader>
               <CardTitle>Fundamental Data</CardTitle>
@@ -109,7 +106,6 @@ export default function NasdaqPage() {
               />
             </CardContent>
           </Card>
-        </div>
       </div>
       
       <Card className="h-[600px]">
@@ -120,8 +116,8 @@ export default function NasdaqPage() {
          <TradingViewWidget
             widgetType="stock_heatmap"
             widgetOptions={{
-              "exchanges": [],
-              "dataSource": "SPX500",
+              "exchanges": ["NASDAQ"],
+              "dataSource": "NASDAQ",
               "grouping": "sector",
               "blockSize": "market_cap_basic",
               "blockColor": "change",

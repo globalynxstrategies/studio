@@ -50,38 +50,34 @@ export default function ForexPage() {
         </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
-                <Card className="h-full">
-                    <CardHeader><CardTitle>Technical Analysis</CardTitle></CardHeader>
-                    <CardContent className="h-full p-0">
-                        <TradingViewWidget
-                            key={`tech-analysis-${symbol}`}
-                            widgetType="technical_analysis"
-                            widgetOptions={{
-                            interval: "1D",
-                            symbol: symbol,
-                            showIntervalTabs: true,
-                            locale: "en",
-                            }}
-                        />
-                    </CardContent>
-                </Card>
-            </div>
-            <div>
-                <Card className="h-full">
-                    <CardHeader><CardTitle>Fundamental Data</CardTitle></CardHeader>
-                    <CardContent className="h-full p-0">
-                        <TradingViewWidget
-                            key={`company-profile-${symbol}`}
-                            widgetType="company_profile"
-                            widgetOptions={{
-                            symbol: symbol,
-                            locale: "en",
-                            }}
-                        />
-                    </CardContent>
-                </Card>
-            </div>
+            <Card className="h-full">
+                <CardHeader><CardTitle>Technical Analysis</CardTitle></CardHeader>
+                <CardContent className="h-full p-0">
+                    <TradingViewWidget
+                        key={`tech-analysis-${symbol}`}
+                        widgetType="technical_analysis"
+                        widgetOptions={{
+                        interval: "1D",
+                        symbol: symbol,
+                        showIntervalTabs: true,
+                        locale: "en",
+                        }}
+                    />
+                </CardContent>
+            </Card>
+            <Card className="h-full">
+                <CardHeader><CardTitle>Fundamental Data</CardTitle></CardHeader>
+                <CardContent className="h-full p-0">
+                    <TradingViewWidget
+                        key={`company-profile-${symbol}`}
+                        widgetType="company_profile"
+                        widgetOptions={{
+                        symbol: symbol,
+                        locale: "en",
+                        }}
+                    />
+                </CardContent>
+            </Card>
         </div>
         
         <Card className="h-[600px]">
