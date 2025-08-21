@@ -6,9 +6,6 @@ import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: BarChart },
-  { href: "/ai-advisor", label: "AI Advisor", icon: Bot },
-  { href: "/news-summarizer", label: "News Summarizer", icon: Newspaper },
-  { href: "/chatbot", label: "Chatbot", icon: MessageSquare },
   { href: "/nasdaq", label: "NASDAQ", icon: LineChart },
   { href: "/nyse", label: "NYSE", icon: Building },
   { href: "/crypto", label: "Crypto", icon: CandlestickChart },
