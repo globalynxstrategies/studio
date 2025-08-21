@@ -25,10 +25,12 @@ export function SidebarNav() {
               asChild
               isActive={pathname === item.href}
               tooltip={item.label}
+              variant="ghost"
+              className="text-base h-10"
             >
               <a href={item.href}>
-                <item.icon className="size-4" />
-                <span>{item.label}</span>
+                <item.icon className="size-5" />
+                <span className="font-medium">{item.label}</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
