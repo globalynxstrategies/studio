@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useRef, memo } from 'react';
@@ -41,57 +42,64 @@ type TradingViewWidgetProps = {
 const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, widgetType }) => {
   const container = useRef<HTMLDivElement>(null);
   const { theme, resolvedTheme } = useTheme();
+  const hasRun = useRef(false);
 
   useEffect(() => {
-    if (!container.current) return;
+    if (!container.current || hasRun.current) return;
 
     const currentTheme = theme === 'system' ? resolvedTheme : theme;
     
-    // Merge theme into widget options
-    const optionsWithTheme = { 
-      ...widgetOptions, 
-      theme: currentTheme, 
-      colorTheme: currentTheme 
+    // Default options for all widgets
+    const defaultOptions = {
+        width: "100%",
+        height: "100%",
+        isTransparent: false,
     };
     
-    // Create script element
+    // Merge theme and defaults into widget options
+    const optionsWithTheme = { 
+        ...defaultOptions,
+        ...widgetOptions,
+        theme: currentTheme, 
+        colorTheme: currentTheme 
+    };
+
     const script = document.createElement('script');
     script.src = WIDGET_URLS[widgetType];
     script.type = 'text/javascript';
     script.async = true;
 
-    // Handle advanced chart differently
     if (widgetType === 'advanced_chart') {
-        script.src = 'https://s3.tradingview.com/tv.js';
-        script.onload = () => {
-            if (container.current && 'TradingView' in window) {
-                // @ts-ignore
-                new window.TradingView.widget({
-                    autosize: true,
-                    ...optionsWithTheme,
-                    container_id: container.current.id,
-                });
-            }
-        };
+      script.onload = () => {
+        if (container.current && 'TradingView' in window) {
+          // @ts-ignore
+          new window.TradingView.widget({
+            autosize: true,
+            ...optionsWithTheme,
+            container: container.current,
+          });
+        }
+      };
     } else {
-        script.innerHTML = JSON.stringify(optionsWithTheme);
+      script.innerHTML = JSON.stringify(optionsWithTheme);
     }
-
-    // Clear previous widget and append the new one
+    
     while (container.current.firstChild) {
       container.current.removeChild(container.current.firstChild);
     }
     container.current.appendChild(script);
+    hasRun.current = true;
 
   }, [widgetOptions, widgetType, theme, resolvedTheme]);
 
-  const containerId = `tradingview_${widgetType}_${Math.random()}`;
   const minHeight = widgetOptions.minHeight || (widgetType === 'ticker_tape' ? 45 : 400);
 
   return (
-    <div className="tradingview-widget-container h-full w-full" ref={container} id={containerId} style={{ minHeight: `${minHeight}px` }}>
-      <div className="tradingview-widget-container__widget h-full w-full"></div>
-    </div>
+    <div 
+        ref={container}
+        className="tradingview-widget-container h-full w-full" 
+        style={{ minHeight: `${minHeight}px` }}
+    />
   );
 };
 

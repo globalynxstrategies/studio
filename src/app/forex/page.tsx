@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -49,16 +50,14 @@ export default function ForexPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
-                <Card className="h-full">
+                <Card className="h-[450px]">
                     <CardHeader><CardTitle>Technical Analysis</CardTitle></CardHeader>
-                    <CardContent>
+                    <CardContent className="h-full p-0">
                         <TradingViewWidget
                             key={`tech-analysis-${symbol}`}
                             widgetType="technical_analysis"
                             widgetOptions={{
                             interval: "1D",
-                            width: "100%",
-                            isTransparent: false,
                             symbol: symbol,
                             showIntervalTabs: true,
                             locale: "en",
@@ -68,16 +67,14 @@ export default function ForexPage() {
                 </Card>
             </div>
             <div className="lg:col-span-2">
-                <Card className="h-full">
+                <Card className="h-[450px]">
                     <CardHeader><CardTitle>Symbol Profile</CardTitle></CardHeader>
-                    <CardContent>
+                    <CardContent className="h-full p-0">
                         <TradingViewWidget
                             key={`company-profile-${symbol}`}
                             widgetType="company_profile"
                             widgetOptions={{
                             symbol: symbol,
-                            width: "100%",
-                            isTransparent: false,
                             locale: "en",
                             }}
                         />
@@ -86,34 +83,28 @@ export default function ForexPage() {
             </div>
         </div>
         
-        <Card>
+        <Card className="h-[600px]">
             <CardHeader><CardTitle>Forex Heatmap</CardTitle></CardHeader>
-            <CardContent className="h-[600px] p-0">
+            <CardContent className="h-full p-0">
                 <TradingViewWidget
                     widgetType="forex_heatmap"
                     widgetOptions={{
-                        "width": "100%",
-                        "height": "100%",
                         "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD", "CNY" ],
-                        "isTransparent": false,
                         "locale": "en",
                     }}
                 />
             </CardContent>
         </Card>
 
-        <Card>
+        <Card className="h-[800px]">
             <CardHeader>
                 <CardTitle>Forex Cross Rates</CardTitle>
             </CardHeader>
-            <CardContent className="h-[800px] p-0">
+            <CardContent className="h-full p-0">
                 <TradingViewWidget
                     widgetType="forex_cross_rates"
                     widgetOptions={{
-                    "width": "100%",
-                    "height": "100%",
                     "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD" ],
-                    "isTransparent": false,
                     "locale": "en"
                     }}
                 />

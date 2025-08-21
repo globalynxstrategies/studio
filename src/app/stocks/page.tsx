@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -9,12 +10,16 @@ import { Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function StocksPage() {
-  const [symbol, setSymbol] = useState("INTC");
-  const [inputSymbol, setInputSymbol] = useState("INTC");
+  const [symbol, setSymbol] = useState("NASDAQ:AAPL");
+  const [inputSymbol, setInputSymbol] = useState("AAPL");
 
   const handleSymbolChange = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSymbol(inputSymbol.toUpperCase());
+    if (!inputSymbol.includes(':')) {
+        setSymbol(`NASDAQ:${inputSymbol.toUpperCase()}`);
+    } else {
+        setSymbol(inputSymbol.toUpperCase());
+    }
   };
 
   return (
@@ -43,11 +48,11 @@ export default function StocksPage() {
         </CardContent>
       </Card>
       
-      <Card>
+      <Card className="h-[600px]">
         <CardHeader>
           <CardTitle>Advanced Chart</CardTitle>
         </CardHeader>
-        <CardContent className="h-[600px] p-0">
+        <CardContent className="h-full p-0">
           <TradingViewWidget
             key={`advanced-chart-${symbol}`}
             widgetType="advanced_chart"
@@ -55,7 +60,6 @@ export default function StocksPage() {
               symbol: symbol,
               interval: "D",
               timezone: "Etc/UTC",
-              theme: "light",
               style: "1",
               locale: "en",
               enable_publishing: false,
@@ -67,41 +71,35 @@ export default function StocksPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <Card className="h-full">
+          <Card className="h-[450px]">
             <CardHeader>
               <CardTitle>Technical Analysis</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="h-full p-0">
               <TradingViewWidget
                 key={`tech-analysis-${symbol}`}
                 widgetType="technical_analysis"
                 widgetOptions={{
                   interval: "1D",
-                  width: "100%",
-                  isTransparent: false,
                   symbol: symbol,
                   showIntervalTabs: true,
                   locale: "en",
-                  colorTheme: "light",
                 }}
               />
             </CardContent>
           </Card>
         </div>
         <div className="lg:col-span-2">
-          <Card className="h-full">
+          <Card className="h-[450px]">
             <CardHeader>
               <CardTitle>Company Profile</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="h-full p-0">
               <TradingViewWidget
                 key={`company-profile-${symbol}`}
                 widgetType="company_profile"
                 widgetOptions={{
                   symbol: symbol,
-                  width: "100%",
-                  isTransparent: false,
-                  colorTheme: "light",
                   locale: "en",
                 }}
               />
@@ -110,11 +108,11 @@ export default function StocksPage() {
         </div>
       </div>
       
-      <Card>
+      <Card className="h-[600px]">
         <CardHeader>
           <CardTitle>Stock Market Heatmap</CardTitle>
         </CardHeader>
-        <CardContent className="h-[600px] p-0">
+        <CardContent className="h-full p-0">
          <TradingViewWidget
             widgetType="stock_heatmap"
             widgetOptions={{
@@ -125,14 +123,10 @@ export default function StocksPage() {
               "blockColor": "change",
               "locale": "en",
               "symbolUrl": "",
-              "colorTheme": "light",
               "hasTopBar": true,
               "isDataSetEnabled": true,
               "isZoomEnabled": true,
               "hasSymbolInfo": true,
-              "isTransparent": false,
-              "width": "100%",
-              "height": "100%"
             }}
           />
         </CardContent>
