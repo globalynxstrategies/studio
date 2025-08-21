@@ -13,7 +13,10 @@ type WidgetType =
   | 'advanced_chart'
   | 'technical_analysis'
   | 'company_profile'
-  | 'stock_heatmap';
+  | 'stock_heatmap'
+  | 'crypto_heatmap'
+  | 'forex_heatmap';
+
 
 const WIDGET_URLS: Record<WidgetType, string> = {
   ticker_tape: 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js',
@@ -26,6 +29,8 @@ const WIDGET_URLS: Record<WidgetType, string> = {
   technical_analysis: 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js',
   company_profile: 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js',
   stock_heatmap: 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js',
+  crypto_heatmap: 'https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js',
+  forex_heatmap: 'https://s3.tradingview.com/external-embedding/embed-widget-forex-heatmap.js',
 };
 
 type TradingViewWidgetProps = {
