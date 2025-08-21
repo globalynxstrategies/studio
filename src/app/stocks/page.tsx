@@ -54,6 +54,7 @@ export default function StocksPage() {
         </CardHeader>
         <CardContent className="h-full p-0">
           <TradingViewWidget
+            id={`advanced-chart-${symbol}`}
             key={`advanced-chart-${symbol}`}
             widgetType="advanced_chart"
             widgetOptions={{
@@ -71,7 +72,7 @@ export default function StocksPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <Card className="h-[450px]">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle>Technical Analysis</CardTitle>
             </CardHeader>
@@ -84,13 +85,15 @@ export default function StocksPage() {
                   symbol: symbol,
                   showIntervalTabs: true,
                   locale: "en",
+                  height: "100%",
+                  width: "100%"
                 }}
               />
             </CardContent>
           </Card>
         </div>
         <div className="lg:col-span-2">
-          <Card className="h-[450px]">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle>Company Profile</CardTitle>
             </CardHeader>
@@ -101,6 +104,8 @@ export default function StocksPage() {
                 widgetOptions={{
                   symbol: symbol,
                   locale: "en",
+                  height: "100%",
+                  width: "100%"
                 }}
               />
             </CardContent>

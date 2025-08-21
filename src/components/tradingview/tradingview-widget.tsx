@@ -37,26 +37,26 @@ const WIDGET_URLS: Record<WidgetType, string> = {
 type TradingViewWidgetProps = {
   widgetOptions: any;
   widgetType: WidgetType;
+  id?: string;
 };
 
-const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, widgetType }) => {
+const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, widgetType, id }) => {
   const container = useRef<HTMLDivElement>(null);
   const { theme, resolvedTheme } = useTheme();
   const hasRun = useRef(false);
+  const uniqueId = useRef(id || `tradingview_${widgetType}_${Math.random().toString(36).substr(2, 9)}`);
 
   useEffect(() => {
     if (!container.current || hasRun.current) return;
 
     const currentTheme = theme === 'system' ? resolvedTheme : theme;
     
-    // Default options for all widgets
     const defaultOptions = {
         width: "100%",
         height: "100%",
         isTransparent: false,
     };
     
-    // Merge theme and defaults into widget options
     const optionsWithTheme = { 
         ...defaultOptions,
         ...widgetOptions,
@@ -71,12 +71,12 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, wi
 
     if (widgetType === 'advanced_chart') {
       script.onload = () => {
-        if (container.current && 'TradingView' in window) {
+        if ('TradingView' in window) {
           // @ts-ignore
           new window.TradingView.widget({
             autosize: true,
             ...optionsWithTheme,
-            container: container.current,
+            container_id: uniqueId.current,
           });
         }
       };
@@ -96,6 +96,7 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetOptions, wi
 
   return (
     <div 
+        id={uniqueId.current}
         ref={container}
         className="tradingview-widget-container h-full w-full" 
         style={{ minHeight: `${minHeight}px` }}
