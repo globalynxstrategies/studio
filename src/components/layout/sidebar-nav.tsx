@@ -1,13 +1,14 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { BarChart, Bot, CandlestickChart, Landmark, LineChart } from "lucide-react"
+import { BarChart, Bot, CandlestickChart, Landmark, LineChart, Building } from "lucide-react"
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: BarChart },
   { href: "/ai-advisor", label: "AI Advisor", icon: Bot },
-  { href: "/stocks", label: "Stock", icon: LineChart },
+  { href: "/nasdaq", label: "NASDAQ", icon: LineChart },
+  { href: "/nyse", label: "NYSE", icon: Building },
   { href: "/crypto", label: "Crypto", icon: CandlestickChart },
   { href: "/forex", label: "Forex", icon: Landmark },
 ]

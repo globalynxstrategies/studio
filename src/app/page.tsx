@@ -1,5 +1,4 @@
 import TradingViewWidget from "@/components/tradingview/tradingview-widget";
-import { FiiDiiChart } from "@/components/dashboard/fii-dii-chart";
 import { PositionSizer } from "@/components/dashboard/position-sizer";
 import { RiskRewardCalculator } from "@/components/dashboard/risk-reward-calculator";
 import PageHeader from "@/components/page-header";
@@ -75,7 +74,6 @@ export default function Dashboard() {
           </Card>
         </div>
         <div className="flex flex-col gap-6">
-          <FiiDiiChart />
           <Card className="h-full">
             <CardContent className="p-0 h-full">
               <TradingViewWidget
