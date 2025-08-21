@@ -22,6 +22,8 @@ export default function StocksPage() {
     }
   };
 
+  const chartId = `advanced-chart-${symbol.replace(/:/g, "-")}`;
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -54,8 +56,8 @@ export default function StocksPage() {
         </CardHeader>
         <CardContent className="h-full p-0">
           <TradingViewWidget
-            id={`advanced-chart-${symbol}`}
-            key={`advanced-chart-${symbol}`}
+            id={chartId}
+            key={chartId}
             widgetType="advanced_chart"
             widgetOptions={{
               symbol: symbol,
@@ -72,7 +74,7 @@ export default function StocksPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <Card className="h-full">
+          <Card className="h-[450px]">
             <CardHeader>
               <CardTitle>Technical Analysis</CardTitle>
             </CardHeader>
@@ -85,7 +87,7 @@ export default function StocksPage() {
                   symbol: symbol,
                   showIntervalTabs: true,
                   locale: "en",
-                  height: "100%",
+                  height: 450,
                   width: "100%"
                 }}
               />
@@ -93,7 +95,7 @@ export default function StocksPage() {
           </Card>
         </div>
         <div className="lg:col-span-2">
-          <Card className="h-full">
+          <Card className="h-[450px]">
             <CardHeader>
               <CardTitle>Company Profile</CardTitle>
             </CardHeader>
@@ -104,7 +106,7 @@ export default function StocksPage() {
                 widgetOptions={{
                   symbol: symbol,
                   locale: "en",
-                  height: "100%",
+                  height: 450,
                   width: "100%"
                 }}
               />
